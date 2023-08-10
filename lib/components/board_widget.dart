@@ -17,17 +17,15 @@ class BoardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: GridView.count(
-        crossAxisCount: board.columns,
-        children: board.fields.map((f) {
-          return FieldWidget(
-            field: f,
-            onOpen: onOpen,
-            onAlternateMarkation: onAlternateMarkation,
-          );
-        }).toList(),
-      ),
+    return GridView.count(
+      crossAxisCount: board.columns,
+      children: board.fields.map((f) {
+        return FieldWidget(
+          field: f,
+          onOpen: onOpen,
+          onAlternateMarkation: onAlternateMarkation,
+        );
+      }).toList(),
     );
   }
 }

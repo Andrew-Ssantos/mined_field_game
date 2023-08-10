@@ -14,16 +14,12 @@ class MinedFieldApp extends StatefulWidget {
 
 class _MinedFieldAppState extends State<MinedFieldApp> {
   String _winned = '';
-  Board _board = Board(
-    lines: 0,
-    columns: 0,
-    qtyOfBombs: 0,
-  );
+  Board? _board;
 
   void _restart() {
     setState(() {
       _winned = '';
-      _board.restart();
+      _board?.restart();
     });
   }
 
@@ -34,12 +30,12 @@ class _MinedFieldAppState extends State<MinedFieldApp> {
     setState(() {
       try {
         field.openField();
-        if (_board.resolved) {
+        if (_board!.resolved) {
           _winned = 'win';
         }
       } on ExplosionException {
         _winned = 'lose';
-        _board.revealBombs();
+        _board?.revealBombs();
       }
     });
   }
@@ -50,14 +46,14 @@ class _MinedFieldAppState extends State<MinedFieldApp> {
     }
     setState(() {
       field.alterMarkation();
-      if (_board.resolved) {
+      if (_board!.resolved) {
         _winned = 'win';
       }
     });
   }
 
   Board _getBoard(double width, double height) {
-    if (_board == Board(columns: 0, lines: 0, qtyOfBombs: 0)) {
+    if (_board == null) {
       int qtyOfColumns = 15;
       double fieldSize = (width / qtyOfColumns);
       int qtyOfLines = (height / fieldSize).floor();
@@ -65,10 +61,11 @@ class _MinedFieldAppState extends State<MinedFieldApp> {
       _board = Board(
         lines: qtyOfLines,
         columns: qtyOfColumns,
-        qtyOfBombs: 7,
+        qtyOfBombs: 25,
       );
     }
-    return _board;
+
+    return _board!;
   }
 
   @override
